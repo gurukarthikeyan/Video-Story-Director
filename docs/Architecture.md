@@ -1,162 +1,263 @@
-# Story Director Architecture
+# Video Story Director Architecture
 
 ## Overview
 
-Story Director is built as a collection of independent reasoning engines.
+Video Story Director is a modular prompt-engineering framework for AI video generation.
 
-Each engine has one responsibility.
+It transforms a user's creative request into high-quality, backend-specific video generation prompts through a layered processing pipeline.
 
-Each engine produces information used by the next engine.
-
-This modular design improves reasoning quality, simplifies maintenance, and allows future expansion without rewriting the entire prompt.
+The architecture separates story understanding from rendering and backend implementation, allowing multiple AI video generation models to share the same story planning system.
 
 ---
 
-## Processing Pipeline
+# Design Goals
+
+The architecture is designed to achieve:
+
+• backend independence
+• story consistency
+• modularity
+• maintainability
+• extensibility
+• predictable reasoning
+• reusable planning
+
+---
+
+# High-Level Architecture
+
+                           User Request
+                                │
+                                ▼
+                  Foundation Layer (01–02)
+                                │
+                                ▼
+               Story Intelligence Layer (03–07)
+                                │
+                                ▼
+                  Rendering Layer (08–09)
+                                │
+                                ▼
+                    Rendering Specification
+                                │
+                ┌───────────────┼───────────────┐
+                ▼               ▼               ▼
+          LTX Backend     Wan Backend     Veo Backend
+                │               │               │
+                └───────────────┼───────────────┘
+                                ▼
+                     Validation Layer (10)
+                                │
+                                ▼
+                       Output Layer (11)
+
+---
+
+# Layer Overview
+
+## Foundation Layer
+
+Modules:
+
+01 Identity
+
+02 Core Principles
+
+Responsibilities:
+
+• define system identity
+• establish permanent reasoning principles
+
+This layer rarely changes.
+
+---
+
+## Story Intelligence Layer
+
+Modules:
+
+03 Request Analysis
+
+04 Character Engine
+
+05 World Engine
+
+06 Story State Engine
+
+07 Scene Planner
+
+Responsibilities:
+
+• understand user intent
+• define characters
+• build the world
+• maintain continuity
+• plan scenes
+
+This layer is completely backend-independent.
+
+---
+
+## Rendering Layer
+
+Modules:
+
+08 Frame0 Engine
+
+09 Rendering Engine
+
+Responsibilities:
+
+• establish the visual anchor
+• determine rendering strategy
+• produce the Rendering Specification
+
+This layer translates story planning into rendering instructions without generating backend prompts.
+
+---
+
+## Backend Layer
+
+Modules:
+
+LTX Backend
+
+Wan Backend
+
+Veo Backend
+
+Future Backends
+
+Responsibilities:
+
+• translate the Rendering Specification
+• apply backend-specific optimization
+• generate model-specific prompts
+
+Backends never modify story logic.
+
+---
+
+## Validation Layer
+
+Module:
+
+10 Validation Engine
+
+Responsibilities:
+
+• verify story fidelity
+• validate continuity
+• ensure user constraints are preserved
+
+Validation compares the backend prompt against the Rendering Specification rather than rewriting the story.
+
+---
+
+## Output Layer
+
+Module:
+
+11 Output Contract
+
+Responsibilities:
+
+• format the validated output
+• present only the requested deliverables
+• hide all internal processing
+
+---
+
+# Data Flow
+
+The architecture processes information through a sequence of well-defined artifacts.
 
 User Request
 
 ↓
 
-Story Planner
+Planning Context
 
 ↓
 
-Character Engine
+Character Definitions
 
 ↓
 
-World Engine
+World Definition
 
 ↓
 
-Story State Engine
+Story State
 
 ↓
 
-Scene Planner
+Scene Plan
 
 ↓
 
-Frame 0 Engine
+Frame0 Specification
 
 ↓
 
-LTX Prompt Engine
+Rendering Specification
 
 ↓
 
-Validation Engine
+Backend Prompt
 
 ↓
 
-Output Formatter
+Validated Prompt
+
+↓
+
+Final Response
+
+Each artifact has a single owner and is consumed by the next stage in the pipeline.
 
 ---
 
-## Engine Responsibilities
+# Backend Independence
 
-### Story Planner
+The Rendering Specification is the architectural contract between story planning and backend implementation.
 
-Determines:
+Every backend consumes the same Rendering Specification while producing prompts optimized for its own capabilities.
 
-- Beginning
-- Middle
-- Ending
-- Scene goals
+This allows new rendering backends to be added without modifying the Story Intelligence or Rendering layers.
 
 ---
 
-### Character Engine
+# Extensibility
 
-Creates persistent character identities.
+Adding support for a new AI video generation model requires only:
 
-Defines:
+1. Implementing a new backend translator.
+2. Following the Rendering Specification contract.
+3. Applying backend-specific optimization.
 
-- appearance
-- clothing
-- proportions
-- movement
-- personality
-- recognition traits
+No changes to story planning modules are required.
 
 ---
 
-### World Engine
+# Architectural Principles
 
-Creates the persistent world.
+Video Story Director follows several core software engineering principles.
 
-Defines:
+• Separation of concerns
+• Single responsibility
+• Backend independence
+• Layered architecture
+• Information hiding
+• Deterministic data flow
+• Extensibility through modular design
 
-- environment
-- lighting
-- weather
-- time of day
-- important props
-
----
-
-### Story State Engine
-
-Tracks everything that changes.
-
-Maintains:
-
-- characters
-- objects
-- environment
-- camera
-- timeline
-
-This engine is responsible for continuity.
+These principles ensure that story planning, rendering, backend translation, validation, and presentation remain independent responsibilities.
 
 ---
 
-### Scene Planner
+# Summary
 
-Breaks the story into scenes.
+Video Story Director is designed as a layered architecture that transforms creative intent into backend-specific AI video prompts through a sequence of specialized modules.
 
-Each scene has one visual objective.
-
----
-
-### Frame 0 Engine
-
-Generates a completely static first frame.
-
-No motion.
-
-No future events.
-
-Only visual state.
-
----
-
-### LTX Prompt Engine
-
-Generates motion beginning immediately after Frame 0.
-
-Uses chronological actions.
-
-Simple visual language.
-
----
-
-### Validation Engine
-
-Checks:
-
-- continuity
-- consistency
-- action budget
-- duration
-- camera rules
-- scene transitions
-
----
-
-### Output Formatter
-
-Produces the final response using the required output contract.
-
-No additional commentary.
+The architecture prioritizes story consistency, backend independence, maintainability, and future extensibility while allowing new AI video generation models to be integrated with minimal changes.

@@ -1,22 +1,27 @@
 # ============================================================================
-# World Engine
+# Video Story Director - World Engine
 # Module: 05
+# Layer: Story Intelligence
 # Purpose: Build and preserve a consistent visual world throughout the story.
+# Inputs: Planning context and character definitions
+# Outputs: World definition
 # ============================================================================
 
 Create a persistent world that exists independently of the characters.
+
+The purpose of this module is to establish **where the story takes place** and define the stable visual characteristics of that world.
 
 The world should evolve naturally as the story progresses.
 
 ----------------------------------------------------------------------
 
-Environment Identity
+1. Environment Identity
 
 ----------------------------------------------------------------------
 
 Establish the primary environment.
 
-Determine when applicable:
+Determine, when applicable:
 
 • location
 • architecture
@@ -28,11 +33,11 @@ Determine when applicable:
 • atmosphere
 • important landmarks
 
-Only infer details required for visual clarity.
+Infer only the environmental details required for visual clarity.
 
 ----------------------------------------------------------------------
 
-Environmental Persistence
+2. Environmental Persistence
 
 ----------------------------------------------------------------------
 
@@ -41,6 +46,9 @@ Maintain environmental consistency across connected scenes.
 Preserve:
 
 • location
+• architecture
+• terrain
+• vegetation
 • lighting
 • weather
 • time of day
@@ -52,62 +60,67 @@ unless the story explicitly changes them.
 
 ----------------------------------------------------------------------
 
-Object Persistence
+3. Object Persistence
 
 ----------------------------------------------------------------------
 
-Treat important objects as persistent story elements.
+Treat important objects as persistent elements of the world.
 
-Objects should remain where they were last seen unless moved, destroyed, removed, or transformed.
+Objects should remain where they were last seen unless they are:
+
+• moved
+• destroyed
+• removed
+• transformed
 
 Examples:
 
 A treasure map remains in the pirate's hand after it is picked up.
 
-A dropped sword stays on the ground.
+A dropped sword remains on the ground.
 
 A baking tray remains on the kitchen counter.
 
 ----------------------------------------------------------------------
 
-World State
+4. World Identity Boundary
 
 ----------------------------------------------------------------------
 
-The world remembers changes.
+This module defines the persistent identity of the world.
 
-Examples include:
+Do not define temporary world state such as:
 
-• opened doors
-• broken windows
-• extinguished torches
-• moved furniture
-• completed snowmen
-• fallen trees
-• damaged walls
+• active fires
+• moving vehicles
+• falling rain
+• explosions
+• temporary smoke
+• temporary crowds
+• temporary lighting effects
 
-Do not reset the environment between connected scenes.
-
-----------------------------------------------------------------------
-
-Environmental Evolution
+Temporary world state belongs to the Story State Engine.
 
 ----------------------------------------------------------------------
 
-Allow gradual changes only when motivated by the story.
+5. Environmental Evolution
+
+----------------------------------------------------------------------
+
+Allow gradual environmental changes only when motivated by the story.
 
 Examples:
 
-• daylight slowly becomes sunset
+• daylight gradually becomes sunset
 • rain begins after dark clouds appear
 • smoke increases after a fire starts
 • footprints accumulate in snow
 
-Avoid abrupt unexplained changes.
+Avoid abrupt or unexplained environmental changes.
 
 ----------------------------------------------------------------------
 
-Visual Simplicity
+6. Visual Simplicity
 
 ----------------------------------------------------------------------
 
@@ -119,10 +132,12 @@ Background details should support the story rather than distract from it.
 
 ----------------------------------------------------------------------
 
-Consistency Priority
+7. Consistency Priority
 
 ----------------------------------------------------------------------
 
-If later planning conflicts with an established world state, preserve the existing environment unless the story explicitly changes it.
+If later planning conflicts with an established world definition, preserve the existing environment unless the story explicitly changes it.
 
-World continuity is preferred over unnecessary variation.
+World continuity always takes priority over unnecessary variation.
+
+Pass the completed world definition to the Story State Engine.

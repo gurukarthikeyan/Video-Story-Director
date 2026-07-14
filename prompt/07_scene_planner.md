@@ -1,391 +1,217 @@
-# Scene Planner
+# ============================================================================
+# Video Story Director - Scene Planner
+# Module: 07
+# Layer: Story Intelligence
+# Purpose: Transform the Story State into a sequence of coherent cinematic scenes.
+# Inputs: Story State
+# Outputs: Scene Plan
+# ============================================================================
 
-## Purpose
+Transform the current Story State into one or more cinematic scenes.
 
-Transform the user's request into a coherent sequence of cinematic scenes.
+The purpose of this module is to determine **what happens in each scene** before any rendering strategy or backend-specific prompt generation begins.
 
-The Scene Planner determines:
-- How many scenes to generate.
-- What happens in each scene.
-- How the story progresses.
-- How action flows naturally from one scene to the next.
-- How to distribute pacing, emotion, and visual variety.
+----------------------------------------------------------------------
 
-The Scene Planner operates after Request Analysis and Story State, but before prompt generation.
+1. Scene Count
 
----
+----------------------------------------------------------------------
 
-# Scene Count
+Determine the required number of scenes from the user's request.
 
-Determine the number of scenes from the user's request.
+If omitted, generate a single scene.
 
-Examples:
+Never invent additional scenes.
 
-"I want one scene"
-→ Generate 1 scene.
+----------------------------------------------------------------------
 
-"Create two connected scenes"
-→ Generate 2 scenes.
+2. Scene Duration
 
-"Generate four 10-second scenes"
-→ Generate 4 scenes.
+----------------------------------------------------------------------
 
-If the user does not specify a scene count:
+Determine the intended duration of each scene.
 
-Default to a single scene.
+Scene duration influences:
 
-Never invent extra scenes.
+• pacing
+• action density
+• visual complexity
+• camera opportunities
 
----
+Longer scenes may contain additional sequential actions.
 
-# Scene Duration
+Shorter scenes should focus on one primary event.
 
-If a duration is provided:
+----------------------------------------------------------------------
 
-Examples:
+3. Scene Purpose
 
-10 seconds
+----------------------------------------------------------------------
 
-5 seconds
+Every scene should have one primary purpose.
 
-8 seconds
+Examples include:
 
-Treat the duration as approximate screen time.
+• introduce a character
+• establish a location
+• advance the story
+• reveal new information
+• resolve a conflict
+• conclude the story
 
-The duration influences:
+Avoid scenes with multiple unrelated objectives.
 
-- pacing
-- action density
-- camera movement
-- animation complexity
+----------------------------------------------------------------------
 
-Longer scenes may contain more actions.
+4. Scene Structure
 
-Short scenes should focus on one primary action.
+----------------------------------------------------------------------
 
----
+Plan each scene as a clear sequence:
 
-# Scene Structure
+• beginning
+• progression
+• conclusion
 
-Each scene should have a clear beginning, middle, and ending.
+The conclusion should naturally transition into the next scene when scenes are connected.
 
-Typical structure:
+----------------------------------------------------------------------
 
-Beginning
-- establish location
-- establish characters
-- establish immediate action
+5. Narrative Progression
 
-Middle
-- primary action
-- interaction
-- emotional development
+----------------------------------------------------------------------
 
-Ending
-- transition naturally into the next scene
+Every connected scene should advance at least one of:
 
-Avoid scenes that end abruptly unless intentionally requested.
+• story progression
+• character development
+• relationships
+• emotional progression
+• environmental progression
+• active goals
 
----
+Avoid scenes where nothing meaningfully changes.
 
-# Scene Progression
+----------------------------------------------------------------------
 
-Each new scene continues from the previous scene.
+6. Character Focus
 
-Never restart:
+----------------------------------------------------------------------
 
-- character position
-- emotional state
-- environment
-- camera logic
+Determine the visual focus of each scene.
 
-Maintain smooth progression.
+Identify when applicable:
 
-Example:
+• primary character
+• secondary characters
+• background characters
 
-Scene 1
+Maintain consistent visual focus throughout the scene.
 
-Dragon notices butterfly.
+----------------------------------------------------------------------
 
-↓
+7. Action Planning
 
-Scene 2
+----------------------------------------------------------------------
 
-Dragon follows butterfly.
+Plan actions as a chronological sequence of observable events.
 
-↓
+Avoid simultaneous or contradictory actions.
 
-Scene 3
+Match action density to the scene duration.
 
-Butterfly lands on dragon's nose.
+----------------------------------------------------------------------
 
-↓
+8. Camera Intent
 
-Scene 4
+----------------------------------------------------------------------
 
-Dragon sneezes dramatically.
+Plan the narrative purpose of the camera.
 
-This forms one continuous narrative.
+Examples include:
 
----
+• establish location
+• follow movement
+• emphasize emotion
+• highlight an object
+• reveal important information
 
-# Narrative Flow
+Do not determine backend-specific camera wording.
 
-The planner should ensure that each scene advances at least one of:
+----------------------------------------------------------------------
 
-- story
-- emotion
-- relationship
-- character goal
-- environmental change
+9. Emotional Progression
 
-Avoid scenes where nothing changes.
+----------------------------------------------------------------------
 
----
+Allow emotions to evolve naturally across connected scenes.
 
-# Action Density
+Avoid abrupt emotional changes unless motivated by the story.
 
-Avoid excessive actions.
+----------------------------------------------------------------------
 
-A 10-second scene should usually contain:
+10. Environmental Progression
 
-1–3 primary actions
+----------------------------------------------------------------------
 
-Examples:
+Plan environmental changes only when motivated by the story.
 
-walk
+Preserve previously established world state.
 
-look
+----------------------------------------------------------------------
 
-smile
+11. Scene Transitions
 
-pick up object
+----------------------------------------------------------------------
 
-jump
+Transitions between connected scenes should be visually and logically continuous.
 
-wave
+Examples include:
 
-turn around
+• continuing movement
+• entering a new location
+• following an object
+• continuing an interaction
 
-Avoid cramming dozens of actions into a single scene.
+Avoid unexplained discontinuities.
 
----
+----------------------------------------------------------------------
 
-# Character Focus
+12. Independent Scenes
 
-Determine the primary subject of each scene.
-
-Avoid switching focus randomly.
-
-If multiple characters exist:
-
-Identify:
-
-Primary
-
-Secondary
-
-Background
-
-Maintain focus throughout the scene.
-
----
-
-# Camera Progression
-
-Plan camera movement across scenes.
-
-Examples:
-
-Scene 1
-
-Wide establishing shot.
-
-↓
-
-Scene 2
-
-Medium tracking shot.
-
-↓
-
-Scene 3
-
-Close-up reaction.
-
-↓
-
-Scene 4
-
-Wide cinematic ending.
-
-Avoid repeating identical camera framing across every scene unless intentionally requested.
-
----
-
-# Emotional Arc
-
-Allow emotions to evolve naturally.
-
-Example:
-
-Curiosity
-
-↓
-
-Excitement
-
-↓
-
-Surprise
-
-↓
-
-Joy
-
-The emotional progression should match the story progression.
-
----
-
-# Environmental Progression
-
-The environment should evolve naturally.
-
-Examples:
-
-Rain starts.
-
-↓
-
-Ground becomes wet.
-
-↓
-
-Puddles appear.
-
-↓
-
-Reflections become visible.
-
-Do not reset environmental changes.
-
----
-
-# Escalation
-
-Each scene should generally increase one of:
-
-- curiosity
-- comedy
-- tension
-- excitement
-- beauty
-- emotional impact
-
-Avoid repetitive scenes.
-
----
-
-# Scene Transitions
-
-Transitions should feel natural.
-
-Examples:
-
-Character exits frame.
-
-↓
-
-Appears entering next area.
-
-Object thrown.
-
-↓
-
-Object lands next scene.
-
-Character opens door.
-
-↓
-
-Next scene begins inside room.
-
-Avoid teleportation.
-
----
-
-# Parallel Actions
-
-When multiple characters are present:
-
-Coordinate actions logically.
-
-Avoid impossible overlaps.
-
-Example:
-
-Character A throws ball.
-
-↓
-
-Character B catches it.
-
-Not:
-
-Character B catches ball before it is thrown.
-
----
-
-# Continuity Validation
-
-Before finalizing each scene, verify:
-
-- Does this follow the previous scene?
-- Are characters consistent?
-- Are objects consistent?
-- Is the environment consistent?
-- Is the emotional progression logical?
-- Does the camera progression make sense?
-
-Correct inconsistencies automatically.
-
----
-
-# Independent Scenes
+----------------------------------------------------------------------
 
 If the user explicitly requests unrelated scenes:
 
-Example:
-
-"Generate four separate fantasy scenes."
-
-Treat each scene independently.
+Plan each scene independently.
 
 Do not preserve continuity between them.
 
----
+----------------------------------------------------------------------
 
-# Story Completion
+13. Story Completion
 
-If the requested number of scenes forms a complete story:
+----------------------------------------------------------------------
 
-Ensure the final scene provides a satisfying conclusion whenever appropriate.
+When the requested scenes form a complete story:
 
-Not every story requires a dramatic ending, but avoid endings that feel accidentally cut off.
+Plan a satisfying conclusion appropriate for the requested tone.
 
----
+Not every story requires a dramatic ending.
 
-# Internal Planning Rule
+----------------------------------------------------------------------
 
-Before generating prompts, internally prepare a scene outline.
+14. Scene Plan Handoff
 
-For every scene determine:
+----------------------------------------------------------------------
 
-- Purpose
-- Main action
-- Emotional state
-- Camera strategy
-- Environmental changes
-- Transition into the next scene
+For every planned scene, internally determine:
 
-This planning process is internal and should not be included in the output unless the user explicitly requests it.
+• scene purpose
+• participating characters
+• environment
+• planned actions
+• emotional state
+• transition
+
+Pass the completed Scene Plan to the Rendering Engine.
