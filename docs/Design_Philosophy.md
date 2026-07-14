@@ -1,119 +1,308 @@
-# LTX Story Director - Design Philosophy
+# ============================================================================
+# Video Story Director - Design Philosophy
+# Purpose: Describe the architectural philosophy and guiding principles behind Video Story Director.
+# ============================================================================
 
-## Purpose
+# Introduction
 
-LTX Story Director is a cinematic planning framework designed to transform a simple user idea into one or more connected video scenes suitable for text-to-video models.
+Video Story Director is a modular story-planning framework for AI video generation.
 
-It does not merely expand prompts.
+Its purpose is to transform a user's creative request into coherent, visually consistent, backend-optimized video generation prompts through a structured reasoning pipeline.
 
-It acts as a virtual director.
+Rather than functioning as a prompt expander, Video Story Director behaves like a virtual film production team.
 
-Its primary responsibility is maintaining visual continuity, cinematic clarity, and story progression across multiple scenes.
+It separates story planning from rendering and backend implementation, allowing the same directing intelligence to support multiple AI video generation models.
 
----
-
-## Core Principles
-
-### 1. Story Before Description
-
-The framework first understands the story.
-
-Visual descriptions exist only to support the story.
+The framework is built around the belief that high-quality video generation begins with high-quality story planning rather than increasingly detailed prompts.
 
 ---
 
-### 2. Characters Are Persistent
+# Design Goals
 
-Every character has a stable identity.
+The architecture is designed to achieve the following goals:
 
-Appearance, clothing, proportions, accessories, and movement style remain consistent unless the story explicitly changes them.
+• coherent storytelling
 
----
+• visual continuity
 
-### 3. The World Has Memory
+• backend independence
 
-Objects do not teleport.
+• modularity
 
-Lighting does not randomly change.
+• maintainability
 
-Weather does not randomly change.
+• predictable reasoning
 
-Environment changes only when justified by the story.
+• extensibility
 
----
+• reusable planning
 
-### 4. Every Scene Has One Job
-
-A scene should complete one clear visual objective.
-
-It should never attempt to tell an entire story.
+Every architectural decision should support one or more of these goals.
 
 ---
 
-### 5. Frame 0 Is Sacred
+# Architectural Principles
 
-The first frame is a photograph.
+## 1. Story Before Rendering
 
-It contains no motion.
+The story is planned before any rendering decisions are made.
 
-It establishes the exact visual state from which animation begins.
+Story planning determines:
 
----
+• what happens
 
-### 6. Motion Starts After Frame 0
+Rendering determines:
 
-Every LTX prompt begins immediately after the first frame.
+• how the planned story should be represented
 
-The first sentence always represents the first visible movement.
+Backends determine:
 
----
+• how the Rendering Specification becomes a model-specific prompt.
 
-### 7. Continuity Is Mandatory
-
-Every new scene inherits the previous scene.
-
-Characters
-
-Objects
-
-Environment
-
-Lighting
-
-Camera
-
-Story state
-
-All persist unless intentionally changed.
+This separation allows story intelligence to remain independent of rendering technology.
 
 ---
 
-### 8. Visual Language Only
+## 2. Separation of Concerns
+
+Each module has one clearly defined responsibility.
+
+No module should duplicate the work of another.
+
+Examples:
+
+Request Analysis interprets requests.
+
+Character Engine defines characters.
+
+World Engine defines environments.
+
+Scene Planner sequences events.
+
+Rendering Engine prepares rendering.
+
+Backends translate.
+
+Validation verifies.
+
+Output presents.
+
+This minimizes coupling while maximizing maintainability.
+
+---
+
+## 3. Backend Independence
+
+Story planning should never depend on the capabilities or syntax of a particular AI video model.
+
+The Story Intelligence layer produces a backend-independent Rendering Specification.
+
+Every backend consumes the same Rendering Specification while applying model-specific optimization.
+
+This architecture allows new rendering backends to be added without modifying story planning.
+
+---
+
+## 4. Characters Are Persistent
+
+Characters are persistent visual entities.
+
+Their identity remains stable throughout connected scenes.
+
+Maintain consistency in:
+
+• appearance
+
+• clothing
+
+• proportions
+
+• accessories
+
+• movement style
+
+unless the story explicitly changes them.
+
+---
+
+## 5. The World Has Memory
+
+The environment is persistent.
+
+Objects remain where they were last seen.
+
+Lighting evolves naturally.
+
+Weather changes only when justified.
+
+Environmental changes become part of the Story State.
+
+The world should never reset without explicit instruction.
+
+---
+
+## 6. Every Scene Has One Purpose
+
+Each scene should accomplish one primary visual objective.
+
+Scenes should advance the story rather than attempt to tell the entire narrative at once.
+
+Simple scenes generally produce clearer video generation.
+
+---
+
+## 7. Frame 0 Defines Reality
+
+Frame 0 establishes the exact visual state immediately before animation begins.
+
+It defines:
+
+• character appearance
+
+• environment
+
+• composition
+
+• lighting
+
+• visual style
+
+Animation begins immediately after this moment.
+
+Frame 0 serves as the visual anchor for the entire sequence.
+
+---
+
+## 8. Motion Is Observable
+
+Video generation is fundamentally the generation of motion.
+
+Motion should be:
+
+• observable
+
+• chronological
+
+• physically believable
+
+• visually readable
 
 Describe only what can be seen.
 
-Avoid internal thoughts.
-
-Avoid narration.
-
-Avoid backstory.
-
-Avoid literary writing.
+Avoid internal thoughts, narration, and literary prose.
 
 ---
 
-### 9. Cinematic Simplicity
+## 9. Continuity Is Mandatory
 
-Prefer simple visual actions over complex descriptions.
+Every connected scene inherits the Story State established by previous scenes.
 
-One sentence should describe one visual event.
+Maintain continuity for:
+
+• characters
+
+• environment
+
+• objects
+
+• lighting
+
+• emotional progression
+
+• camera language
+
+• story progression
+
+Continuity should only change when explicitly directed by the story or the user.
 
 ---
 
-### 10. Model Agnostic Design
+## 10. Rendering Is Translation
 
-Story Director is independent of any video model.
+Rendering does not create stories.
 
-Adapters convert Story Director output into LTX, Wan, Veo, Kling, or future formats.
+It translates completed story plans into a backend-independent Rendering Specification.
 
-The directing intelligence remains the same.
+Rendering determines representation rather than narrative.
+
+---
+
+## 11. Backends Are Translators
+
+Backend modules translate the Rendering Specification into prompts optimized for specific AI video generation models.
+
+Backends own:
+
+• prompt wording
+
+• model optimization
+
+• prompt structure
+
+• backend best practices
+
+Backends must never modify story logic.
+
+---
+
+## 12. Validation Preserves Fidelity
+
+Validation exists to preserve story fidelity rather than improve creativity.
+
+Its purpose is to verify that backend-generated prompts accurately represent the Rendering Specification.
+
+Validation protects continuity while remaining independent of backend implementation.
+
+---
+
+## 13. Output Is Presentation
+
+The Output Contract presents validated prompts to the user.
+
+Formatting should never modify planning, rendering, or validation.
+
+Presentation is the final step in the pipeline.
+
+---
+
+# Software Engineering Principles
+
+Video Story Director follows established software engineering practices.
+
+These include:
+
+• layered architecture
+
+• separation of concerns
+
+• single responsibility
+
+• information hiding
+
+• deterministic processing
+
+• explicit module ownership
+
+• backend abstraction
+
+• extensibility through modular design
+
+These principles make the framework easier to understand, maintain, and extend.
+
+---
+
+# Long-Term Vision
+
+Video Story Director is designed as a long-term architecture rather than a collection of prompts.
+
+Its modular structure allows new rendering models, new planning techniques, and future capabilities to be introduced with minimal impact on existing components.
+
+The framework should evolve through new modules and backend implementations while preserving stable architectural contracts between layers.
+
+---
+
+# Summary
+
+Video Story Director treats AI video generation as a structured planning problem rather than a prompt-writing exercise.
+
+By separating story planning, rendering, backend translation, validation, and presentation into independent responsibilities, the framework produces more consistent, maintainable, and extensible results while remaining adaptable to future AI video generation technologies.

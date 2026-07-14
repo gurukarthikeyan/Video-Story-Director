@@ -1,345 +1,197 @@
-# Frame 0 Engine
+# ============================================================================
+# Video Story Director - Frame 0 Engine
+# Module: 08
+# Layer: Rendering
+# Purpose: Define the visual anchor that establishes the initial state of the story before animation begins.
+# Inputs: Scene Plan
+# Outputs: Frame 0 Specification
+# ============================================================================
 
-## Purpose
+Generate a complete visual specification for the first frame of a new story or scene sequence.
 
-Generate a high-quality first-frame image prompt that serves as the visual anchor for the entire video sequence.
+The purpose of this module is to define **what exists at the exact moment before animation begins**.
 
-The first frame establishes:
+The Frame 0 specification becomes the visual anchor for all subsequent scenes.
 
-- Character appearance
-- Environment
-- Lighting
-- Composition
-- Camera angle
-- Art direction
-- Mood
-- Visual identity
+----------------------------------------------------------------------
 
-All subsequent video prompts should assume this first frame exists.
+1. When to Generate
 
----
+----------------------------------------------------------------------
 
-# When to Generate
+Generate a new Frame 0 only when:
 
-Generate a Frame 0 prompt whenever:
+• starting a new story
+• starting a new scene sequence
+• the user requests an image-to-video workflow
+• no visual anchor currently exists
 
-- The user requests a new story.
-- The user starts a new scene sequence.
-- The user requests an image + video workflow.
-- The current story has no established visual anchor.
+Do not generate a new Frame 0 when continuing an existing story unless explicitly requested.
 
-Do not generate a new Frame 0 if the user is simply continuing an existing story, unless explicitly requested.
+----------------------------------------------------------------------
 
----
+2. Visual Anchor
 
-# Primary Goal
+----------------------------------------------------------------------
 
-The first frame should be visually complete and immediately recognizable.
+Frame 0 establishes the initial visual state of the story.
 
-It should look like a professionally composed still from a finished animated film rather than a rough concept sketch.
+It should define:
 
----
+• characters
+• environment
+• lighting
+• composition
+• camera placement
+• artistic direction
+• mood
 
-# Composition
+Every subsequent scene should inherit this visual foundation unless intentionally changed.
 
-Prefer strong cinematic compositions.
+----------------------------------------------------------------------
 
-Examples:
+3. Subject Initialization
 
-- Rule of thirds
-- Center framing for iconic reveals
-- Symmetrical framing
-- Dynamic diagonal composition
-- Leading lines
-- Layered foreground, midground, and background
-
-Avoid cluttered or confusing layouts.
-
----
-
-# Subject Clarity
+----------------------------------------------------------------------
 
 Clearly establish the primary subject.
 
-The viewer should instantly recognize:
+The viewer should immediately recognize:
 
-- who the main character is
-- where they are
-- what they are doing
-- what the visual focus is
+• who is present
+• where they are
+• what the visual focus is
 
 Avoid competing focal points.
 
----
+----------------------------------------------------------------------
 
-# Character Initialization
+4. Character Initialization
 
-Fully establish every important character.
+----------------------------------------------------------------------
 
-Include:
+Initialize every important character using the Character Engine.
 
-- appearance
-- proportions
-- clothing
-- accessories
-- expression
-- pose
-- species
-- age impression
-- distinctive visual features
+Establish:
 
-Maintain consistency with the Character Engine.
+• appearance
+• proportions
+• clothing
+• accessories
+• pose
+• expression
+• distinctive visual traits
 
----
+Do not redefine established character identity.
 
-# Environment Initialization
+----------------------------------------------------------------------
 
-Clearly establish:
+5. Environment Initialization
 
-- location
-- architecture
-- terrain
-- vegetation
-- weather
-- time of day
-- season
-- atmosphere
+----------------------------------------------------------------------
 
-The environment should immediately communicate the setting.
+Initialize the environment using the World Engine.
 
----
+Establish:
 
-# Lighting
+• location
+• architecture
+• terrain
+• vegetation
+• weather
+• lighting
+• time of day
+• atmosphere
 
-Specify lighting intentionally.
+Do not redefine the established world.
 
-Examples:
+----------------------------------------------------------------------
 
-- soft morning sunlight
-- warm golden hour
-- overcast daylight
-- cinematic moonlight
-- dramatic sunset
-- studio lighting
-- neon city glow
+6. Composition
 
-Lighting should support the mood.
+----------------------------------------------------------------------
 
----
+Prefer strong cinematic composition.
 
-# Color Palette
+Examples include:
 
-Establish a consistent palette.
+• rule of thirds
+• centered composition
+• leading lines
+• layered depth
+• symmetrical framing
+• dynamic diagonals
 
-Examples:
+Avoid clutter and visual ambiguity.
 
-- warm pastel colors
-- vibrant fantasy colors
-- earthy natural tones
-- cool blue sci-fi lighting
-- muted cinematic realism
-- colorful animated style
+----------------------------------------------------------------------
 
-Maintain this palette throughout the story unless intentionally changed.
+7. Camera Foundation
 
----
+----------------------------------------------------------------------
 
-# Camera Placement
+Establish:
 
-Specify:
+• framing
+• viewing angle
+• perspective
+• camera distance
 
-- framing
-- viewing angle
-- perspective
-- distance
+Do not determine backend-specific camera wording.
 
-Examples:
+----------------------------------------------------------------------
 
-Wide establishing shot
+8. Visual Style
 
-Medium shot
+----------------------------------------------------------------------
 
-Close-up
+Establish a consistent artistic direction.
 
-Eye level
+Examples include:
 
-Low angle
-
-High angle
-
-Over-the-shoulder
-
-Avoid vague camera descriptions.
-
----
-
-# Lens Style
-
-When appropriate, define lens characteristics.
-
-Examples:
-
-24mm cinematic wide
-
-35mm natural perspective
-
-50mm portrait
-
-85mm close-up
-
-Macro
-
-Keep lens choice consistent with the intended storytelling style.
-
----
-
-# Depth
-
-Prefer layered scenes.
-
-Foreground
-
-↓
-
-Subject
-
-↓
-
-Background
-
-Create visual depth whenever appropriate.
-
-Avoid flat compositions.
-
----
-
-# Pose
-
-Characters should have natural, readable poses.
-
-Avoid:
-
-- stiff posture
-- awkward symmetry
-- unclear body language
-
-Body language should reinforce emotion.
-
----
-
-# Expression
-
-Facial expressions should clearly communicate the current emotional state.
-
-Examples:
-
-curious
-
-determined
-
-joyful
-
-worried
-
-playful
-
-surprised
-
-Match the Story State.
-
----
-
-# Visual Readability
-
-The image should remain readable even as a single frame.
-
-Avoid:
-
-- excessive clutter
-- overlapping subjects
-- hidden faces
-- confusing silhouettes
-
-Every important subject should be identifiable.
-
----
-
-# Style Consistency
-
-Maintain one consistent artistic direction.
-
-Examples:
-
-Pixar-inspired stylized animation
-
-Anime
-
-Photorealistic
-
-Oil painting
-
-Hand-painted fantasy
-
-Stop-motion
+• stylized animation
+• anime
+• photorealistic
+• painterly
+• stop-motion
 
 Do not mix incompatible styles unless explicitly requested.
 
----
+----------------------------------------------------------------------
 
-# Motion Readiness
+9. Motion Readiness
 
-Choose poses that naturally lead into motion.
+----------------------------------------------------------------------
 
-Examples:
+Frame 0 contains no motion.
 
-- one foot already stepping forward
-- hand reaching toward an object
-- dragon preparing to flap its wings
-- child leaning forward before running
+Characters and objects should appear naturally prepared for the first planned action.
 
-Avoid static "posing for a photo."
+Avoid static portrait-like posing.
 
-The first frame should feel like the instant before movement begins.
+----------------------------------------------------------------------
 
----
+10. Continuity Anchor
 
-# Continuity Anchor
+----------------------------------------------------------------------
 
-The Frame 0 prompt becomes the visual reference for:
+Frame 0 becomes the reference for:
 
-- character proportions
-- clothing
-- environment
-- lighting
-- mood
-- camera language
-- art style
+• character appearance
+• environment
+• lighting
+• composition
+• artistic style
+• visual identity
 
-Subsequent scenes should not redefine these elements unless intentionally changed.
+Subsequent rendering should preserve these elements unless intentionally changed.
 
----
+----------------------------------------------------------------------
 
-# Output Scope
+11. Frame 0 Handoff
 
-The Frame 0 output should describe only the first frame.
+----------------------------------------------------------------------
 
-Do not include future actions, scene transitions, or events that occur later in the sequence.
+Produce a complete Frame 0 Specification.
 
-Future motion belongs in the LTX video prompts.
-
----
-
-# Internal Validation
-
-Before producing the Frame 0 prompt, verify:
-
-- Is the main subject immediately clear?
-- Are all key characters initialized?
-- Is the environment fully established?
-- Is the lighting intentional?
-- Is the composition cinematic?
-- Does the pose naturally lead into animation?
-- Is the art style consistent?
-- Can this frame serve as a reliable visual anchor for all following scenes?
-
-Revise internally if necessary before generating the final Frame 0 prompt.
+Pass the specification to the Rendering Engine for backend-specific prompt generation.

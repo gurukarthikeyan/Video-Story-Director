@@ -1,180 +1,230 @@
+# ============================================================================
 # Story State Engine
+# Developer Documentation
+# Purpose: Explain how Video Story Director maintains continuity across connected scenes.
+# ============================================================================
 
-## Purpose
+# Overview
 
-The Story State Engine maintains continuity across every connected scene.
+The Story State Engine is the continuity system of Video Story Director.
 
-Instead of recreating the story from scratch, every scene inherits the complete visual state of the previous scene.
+Rather than recreating the story for every scene, the Story State Engine maintains a persistent representation of the current story and updates it as the narrative progresses.
 
-The engine updates only the elements that change.
+Every connected scene inherits the Story State established by previous scenes.
+
+Only the elements that change are updated.
+
+---
+
+# Purpose
+
+The Story State Engine is responsible for preserving:
+
+• character continuity
+
+• object persistence
+
+• environmental consistency
+
+• emotional progression
+
+• camera continuity
+
+• timeline progression
+
+It acts as the runtime memory of the Story Intelligence Layer.
 
 ---
 
-## Persistent State
+# Story State Components
 
-The following categories always exist.
-
-Character State
-
-Object State
-
-Environment State
-
-Camera State
-
-Timeline State
-
----
+The Story State consists of five major categories.
 
 ## Character State
 
-Tracks
+Tracks information about every recurring character.
 
-- appearance
-- clothing
-- accessories
-- body condition
-- pose
-- emotional state
-- position
-- object ownership
+Examples include:
 
-Example
+• appearance
 
-Baby
+• clothing
 
-holding:
-Cookie
+• accessories
 
-expression:
-Happy
+• emotional state
 
-location:
-Kitchen Counter
+• current pose
+
+• current location
+
+• held objects
+
+• visible physical condition
+
+Character identity persists until explicitly changed.
 
 ---
 
 ## Object State
 
-Tracks
+Tracks important story objects.
 
-- owner
-- location
-- condition
-- orientation
-- visibility
+Examples include:
 
-Example
+• owner
 
-Cookie Dough
+• location
 
-Location:
-Floor
+• condition
 
-Condition:
-Splattered
+• orientation
 
-Owner:
-None
+• visibility
+
+Objects continue to exist even when they are not the primary focus of a scene.
 
 ---
 
 ## Environment State
 
-Tracks
+Tracks the persistent world.
 
-- location
-- lighting
-- weather
-- atmosphere
-- destruction
-- important environmental changes
+Examples include:
+
+• location
+
+• weather
+
+• lighting
+
+• time of day
+
+• atmosphere
+
+• environmental damage
+
+• important landmarks
+
+Environmental changes become part of the Story State.
 
 ---
 
 ## Camera State
 
-Tracks
+Tracks visual language across connected scenes.
 
-- framing
-- height
-- angle
-- movement
-- lens feel
+Examples include:
 
-If unchanged,
+• framing
 
-inherit.
+• viewing angle
+
+• lens style
+
+• camera movement
+
+• shot progression
+
+Camera continuity improves visual consistency throughout a sequence.
 
 ---
 
 ## Timeline State
 
-Tracks
+Tracks story progression.
 
-Story progression.
+Every connected scene begins where the previous scene ended.
 
-Every scene begins exactly where the previous scene ended.
+The Story State prevents unexplained jumps in:
 
-No unexplained jumps.
+• character position
 
-No resetting actions.
+• object placement
 
----
+• environment
 
-## Inheritance Rules
+• emotional progression
 
-Before creating Scene N
-
-inherit
-
-Character State
-
-↓
-
-Object State
-
-↓
-
-Environment State
-
-↓
-
-Camera State
-
-↓
-
-Timeline State
-
-Apply only the changes introduced by Scene N.
-
-Everything else remains identical.
+• narrative flow
 
 ---
 
-## Continuity Priority
+# State Inheritance
 
-If context becomes limited,
+Before planning a new scene, the Story State is inherited from the previous scene.
 
-preserve information in this order.
+The planning process follows this sequence.
 
-1 Characters
+Previous Story State
 
-2 Story
+↓
 
-3 Objects
+Apply scene changes
 
-4 Environment
+↓
 
-5 Camera
+Updated Story State
 
-6 Decorative Details
+↓
 
-Never sacrifice higher-priority information to preserve lower-priority information.
+Next Scene
+
+Only the changes introduced by the current scene modify the Story State.
+
+Everything else remains unchanged.
 
 ---
 
-## Engine Philosophy
+# Continuity Priority
+
+When context becomes limited, preserve information in the following order.
+
+1. Characters
+
+2. Story progression
+
+3. Objects
+
+4. Environment
+
+5. Camera language
+
+6. Decorative details
+
+Higher-priority information should never be sacrificed to preserve lower-priority details.
+
+---
+
+# Relationship to Other Modules
+
+The Story State Engine operates within the Story Intelligence Layer.
+
+It receives information from:
+
+• Character Engine
+
+• World Engine
+
+• Scene Planner
+
+It provides continuity information to:
+
+• Scene Planner
+
+• Frame0 Engine
+
+• Rendering Engine
+
+The Story State itself is never modified by backend implementations.
+
+---
+
+# Design Philosophy
+
+The Story State Engine follows one fundamental rule:
+
+Preserve.
 
 Do not recreate.
 
@@ -182,4 +232,14 @@ Do not reinterpret.
 
 Do not redesign.
 
-Only update.
+Only update what has changed.
+
+This approach ensures that every connected scene remains part of a single coherent visual timeline.
+
+---
+
+# Summary
+
+The Story State Engine is the continuity backbone of Video Story Director.
+
+By maintaining a persistent representation of characters, objects, environments, camera language, and timeline progression, it enables long-form visual storytelling while keeping individual planning modules independent of backend-specific implementation.

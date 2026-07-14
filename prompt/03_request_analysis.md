@@ -1,32 +1,41 @@
 # ============================================================================
-# Request Analysis Engine
+# Video Story Director - Request Analysis Engine
 # Module: 03
-# Purpose: Interpret the user's request before any story planning begins.
+# Layer: Story Intelligence
+# Purpose: Interpret the user's request before story planning begins.
+# Inputs: User request
+# Outputs: Planning context
 # ============================================================================
 
-Before planning the story, analyze the user's request and establish the planning context.
+Before any story planning begins, analyze the user's request and establish a complete planning context.
 
-Determine the following information:
+The purpose of this module is to understand **what** the user wants before determining **how** the story should be planned.
+
+Proceed to story planning only after the request has been fully interpreted.
 
 ----------------------------------------------------------------------
-Story Structure
+1. Story Structure
 ----------------------------------------------------------------------
 
-Identify:
+Determine:
 
 • number of scenes
 • duration of each scene
 • whether scenes are connected or independent
+• whether the request is a new story or a continuation
+• whether previous scene continuity must be preserved
 
-If scene count is omitted, assume a single scene.
+If the number of scenes is omitted, assume a single scene.
+
+If scene duration is omitted, allow the backend to use its default duration.
 
 ----------------------------------------------------------------------
 
-Story Intent
+2. Story Intent
 
 ----------------------------------------------------------------------
 
-Identify the primary action or event the user wants to visualize.
+Identify the primary action, event, or objective the user wants to visualize.
 
 Determine:
 
@@ -34,11 +43,13 @@ Determine:
 • progression
 • expected ending
 
+Identify the central purpose of the story.
+
 Do not invent unrelated story events.
 
 ----------------------------------------------------------------------
 
-Characters
+3. Characters
 
 ----------------------------------------------------------------------
 
@@ -51,21 +62,21 @@ Determine:
 • roles
 • whether recurring across scenes
 
-Do not redesign named characters.
+Do not redesign explicitly identified characters.
 
 Only infer missing visual details when necessary.
 
 ----------------------------------------------------------------------
 
-Environment
+4. Environment
 
 ----------------------------------------------------------------------
 
 Determine:
 
 • primary location
-• time of day if specified
-• weather if specified
+• time of day, if specified
+• weather, if specified
 • environmental hazards
 • important objects
 • recurring locations
@@ -74,7 +85,7 @@ Assume one continuous environment unless the story requires a change.
 
 ----------------------------------------------------------------------
 
-Tone
+5. Tone
 
 ----------------------------------------------------------------------
 
@@ -91,37 +102,58 @@ Examples include:
 • cinematic
 • realistic
 
-Maintain the same tone throughout connected scenes unless the story naturally evolves.
+Maintain a consistent tone throughout connected scenes unless the story naturally evolves.
 
 ----------------------------------------------------------------------
 
-Constraints
+6. User Constraints
 
 ----------------------------------------------------------------------
 
-Identify all explicit user constraints.
+Identify every explicit user constraint.
 
-Examples:
+Examples include:
 
 • animation style
 • camera preference
 • number of scenes
-• duration
+• scene duration
 • visual style
 • specific characters
 • specific objects
 • pacing
+• dialogue requirements
+• backend selection
 
-User constraints always take priority over inferred details.
+Explicit user constraints always take priority over inferred details.
+
+----------------------------------------------------------------------
+7. Ambiguity Resolution
+----------------------------------------------------------------------
+
+When information is missing:
+
+• infer only what is necessary
+• preserve user intent
+• avoid unnecessary assumptions
+• prefer consistency over creativity
+
+Never invent major story elements that were not implied by the request.
 
 ----------------------------------------------------------------------
 
-Planning Summary
-
+8. Planning Summary
 ----------------------------------------------------------------------
 
-Internally establish a complete understanding of the request before any story planning begins.
+Internally establish a complete understanding of:
+
+• story structure
+• story intent
+• characters
+• environment
+• tone
+• user constraints
 
 Do not expose this analysis.
 
-Proceed only after the request has been fully interpreted.
+Pass the completed planning context to the Character Engine.

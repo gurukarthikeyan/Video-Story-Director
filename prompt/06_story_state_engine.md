@@ -1,536 +1,181 @@
-# Story State Engine
+# ============================================================================
+# Video Story Director - Story State Engine
+# Module: 06
+# Layer: Story Intelligence
+# Purpose: Maintain the evolving state of the story throughout one or more connected scenes.
+# Inputs: Planning context, character definitions, world definition
+# Outputs: Current story state
+# ============================================================================
 
-## Purpose
+Maintain a complete Story State throughout the entire story.
 
-Maintain complete story continuity across one or more scenes.
+The purpose of this module is to remember **what is true at the current point in the story**.
 
-This module acts as the internal memory of the Story Director.
+The Story State evolves as scenes progress while preserving continuity.
 
-The user should never need to repeat information that has already been established unless explicitly requesting a change.
+----------------------------------------------------------------------
+1. Story State
+----------------------------------------------------------------------
 
----
+Maintain the current state of:
 
-# Story State
+• characters
+• relationships
+• environment
+• active objects
+• current locations
+• time of day
+• weather
+• active goals
+• story progression
+• camera style
+• visual style
 
-For every request, maintain an internal Story State.
+Update the Story State after every scene.
 
-The Story State consists of:
+----------------------------------------------------------------------
 
-• Characters
-• Relationships
-• Environment
-• Current location
-• Time of day
-• Weather
-• Active objects
-• Clothing
-• Injuries
-• Emotional state
-• Story progression
-• Camera style
-• Visual style
-• Active goals
-• Recent actions
+2. Character State
+----------------------------------------------------------------------
 
-These elements persist naturally across scenes.
+Maintain temporary character state including:
 
----
+• current location
+• current pose
+• current action
+• emotional state
+• injuries
+• clothing condition
+• visible dirt
+• water
+• mud
+• blood
+• tears
+• sweat
+• carried objects
 
-# Story Timeline
+Do not modify permanent character identity.
 
-Treat scenes as a timeline.
+----------------------------------------------------------------------
 
-Scene 1
-↓
+3. World State
+----------------------------------------------------------------------
 
-Scene 2
-↓
+Maintain temporary world state including:
 
-Scene 3
-↓
+• opened or closed objects
+• damaged structures
+• moved furniture
+• active fires
+• smoke
+• fog
+• water level
+• crowd density
+• temporary lighting conditions
+• temporary weather effects
 
-Scene N
+Do not modify the permanent world definition unless the story changes it.
 
-Every scene continues from the previous scene unless the user explicitly requests:
+----------------------------------------------------------------------
 
-• new story
-• flashback
-• dream
-• alternate version
-• different universe
-• reset
-• reboot
+4. Object Persistence
+----------------------------------------------------------------------
 
-Never randomly restart the narrative.
+Important objects continue to exist throughout the story.
 
----
+Track:
 
-# State Persistence
+• owner
+• location
+• condition
 
-Persist:
+Objects remain where they were last established unless moved, destroyed, removed, or transformed.
 
-Characters
+----------------------------------------------------------------------
 
-Identity
+5. Story Progression
+----------------------------------------------------------------------
 
-Appearance
+Treat connected scenes as one continuous timeline.
 
-Clothing
+Every scene begins where the previous scene ended unless the user explicitly requests:
 
-Accessories
+• a new story
+• a flashback
+• a dream
+• an alternate timeline
+• a reboot
+• a reset
 
-Expressions
+Never restart continuity without instruction.
 
-Current emotion
+----------------------------------------------------------------------
 
-Known injuries
+6. Cause and Effect
+----------------------------------------------------------------------
 
-Objects being held
+Every significant action should update the Story State.
 
-Position
+Examples include:
 
-Relationships
-
-Environment
-
-Lighting
-
-Weather
-
-Architecture
-
-Destroyed objects
-
-Vehicles
-
-Furniture
-
-Important props
-
-Camera language
-
-Lens choice
-
-Shot style
-
-Visual style
-
-Rendering style
-
-Mood
-
-Tone
-
-Color palette
-
-Everything remains consistent.
-
----
-
-# Character State
-
-Each character stores:
-
-Name
-
-Species
-
-Gender
-
-Age
-
-Body type
-
-Height
-
-Clothing
-
-Accessories
-
-Hair
-
-Face
-
-Eyes
-
-Personality
-
-Emotional state
-
-Current action
-
-Current location
-
-Inventory
-
-Damage
-
-Visible dirt
-
-Water
-
-Mud
-
-Blood
-
-Tears
-
-Sweat
-
-Anything physically accumulated.
-
----
-
-# Environment State
-
-Maintain:
-
-Location
-
-Buildings
-
-Roads
-
-Furniture
-
-Nature
-
-Vegetation
-
-Weather
-
-Fog
-
-Smoke
-
-Fire
-
-Water level
-
-Crowd density
-
-Vehicles
-
-Lighting
-
-Time
-
-If something changes, remember it.
-
-Example:
-
-Tree falls.
-
-Tree stays fallen.
-
-Do not regenerate it standing.
-
----
-
-# Object Persistence
-
-Objects continue existing.
-
-Example:
-
-Character drops a sword.
-
-Unless someone picks it up:
-
-The sword remains on the ground.
-
-Example:
-
-Coffee mug placed on desk.
-
-Future scenes include the mug.
-
----
-
-# Clothing Continuity
-
-Characters do not randomly change clothing.
-
-Only change clothing when:
-
-User requests
-
-Story indicates change
-
-Time skip
-
-Costume change
-
-Uniform change
-
-Weather adaptation
-
-Otherwise preserve clothing.
-
----
-
-# Injury Continuity
-
-Injuries persist.
-
-Cuts remain.
-
-Bruises remain.
-
-Bandages remain.
-
-Mud remains.
-
-Wet clothing remains wet until enough time has passed.
-
----
-
-# Emotion Continuity
-
-Emotions evolve naturally.
-
-Example:
-
-Fear
-
-↓
-
-Relief
-
-↓
-
-Happiness
-
-Do not instantly jump between unrelated emotional states.
-
----
-
-# Goal Tracking
-
-Maintain active goals.
-
-Example:
-
-Find dragon egg.
-
-Escape castle.
-
-Reach village.
-
-Protect child.
-
-Goals remain active until completed or abandoned.
-
----
-
-# Action Continuity
-
-Every scene begins where the previous one ended.
-
-Bad:
-
-Character running
-
-↓
-
-Next scene standing somewhere unrelated.
-
-Good:
-
-Running
-
-↓
-
-Continues running
-
-↓
-
-Stops
-
-↓
-
-Looks behind
-
-↓
-
-Keeps moving
-
-Movement should flow naturally.
-
----
-
-# Cause and Effect
-
-Events produce consequences.
-
-Explosion
-
-↓
-
-Smoke
-
-↓
-
-Fire
-
-↓
-
-Damage
-
-↓
-
-Debris
-
-Rain
-
-↓
-
-Wet ground
-
-↓
-
-Reflections
-
-↓
-
-Wet clothing
-
-Broken window
-
-↓
-
-Glass remains on floor
+• damage creates debris
+• rain creates wet surfaces
+• fire creates smoke
+• broken objects remain broken
+• footprints remain until naturally removed
 
 Maintain logical continuity.
 
----
+----------------------------------------------------------------------
 
-# Time Progression
+7. Time Progression
+----------------------------------------------------------------------
 
-Time should progress naturally.
+Allow time to progress naturally.
 
-Morning
+Avoid unexplained jumps in:
 
-↓
+• time
+• location
+• weather
+• character state
 
-Afternoon
+unless the story explicitly requires them.
 
-↓
+----------------------------------------------------------------------
 
-Evening
+8. User Overrides
+----------------------------------------------------------------------
 
-↓
+User instructions always take precedence.
 
-Night
+When the user changes any established element, immediately update the Story State.
 
-Avoid random jumps unless requested.
+Preserve all unaffected continuity.
 
----
+----------------------------------------------------------------------
 
-# User Overrides
+9. State Inference
+----------------------------------------------------------------------
 
-The user always has authority.
+Infer only the minimum temporary state required for continuity.
 
-If the user changes:
+Never invent unrelated events.
 
-Location
+Prefer preserving established continuity over introducing new assumptions.
 
-Character
+----------------------------------------------------------------------
 
-Appearance
+10. Story State Handoff
+----------------------------------------------------------------------
 
-Weather
+Before planning the next scene, internally determine:
 
-Time
+• who is present
+• where they are
+• what has changed
+• what remains unchanged
+• which objects are active
+• what the current goal is
 
-Style
-
-Timeline
-
-Story direction
-
-Immediately update Story State.
-
-Do not resist user edits.
-
----
-
-# State Inference
-
-Infer only when strongly supported.
-
-If a previous scene shows:
-
-Character soaked by rain
-
-Next scene may continue with wet clothing.
-
-Do not invent unrelated events.
-
----
-
-# Long Sequence Support
-
-Support:
-
-Single scene
-
-Two scenes
-
-Three scenes
-
-Four scenes
-
-Ten scenes
-
-Twenty scenes
-
-Maintain continuity across the entire sequence.
-
----
-
-# Multi-Scene Requests
-
-If the user requests multiple scenes:
-
-Generate each scene as a continuation of the previous one.
-
-Never treat scenes as independent prompts.
-
-Each scene should inherit:
-
-Characters
-
-Environment
-
-Lighting
-
-Camera language
-
-Objects
-
-Mood
-
-Story progression
-
-Unless explicitly changed.
-
----
-
-# Internal Rule
-
-Before generating any scene, mentally answer:
-
-Who is present?
-
-Where are they?
-
-What just happened?
-
-What changed?
-
-What remains unchanged?
-
-What is the current goal?
-
-Use these answers to preserve continuity throughout the story.
+Pass the updated Story State to the Scene Planner.

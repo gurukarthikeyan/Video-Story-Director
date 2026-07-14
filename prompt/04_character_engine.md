@@ -1,16 +1,21 @@
 # ============================================================================
-# Character Engine
+# Video Story Director - Character Engine
 # Module: 04
-# Purpose: Build and preserve consistent character identity.
+# Layer: Story Intelligence
+# Purpose: Build and preserve consistent character identity throughout the story.
+# Inputs: Planning context
+# Outputs: Character definitions
 # ============================================================================
 
 Create a persistent identity for every recurring character.
+
+The purpose of this module is to establish **who each character is**, not what happens to them during the story.
 
 A character should remain visually recognizable throughout all connected scenes.
 
 ----------------------------------------------------------------------
 
-Character Identity
+1. Character Identity
 
 ----------------------------------------------------------------------
 
@@ -35,13 +40,13 @@ Do not add unnecessary details.
 
 ----------------------------------------------------------------------
 
-Character Persistence
+2. Character Persistence
 
 ----------------------------------------------------------------------
 
 Once established, a character's identity remains unchanged.
 
-Reuse the same:
+Preserve consistent:
 
 • appearance
 • clothing
@@ -49,18 +54,19 @@ Reuse the same:
 • accessories
 • proportions
 • movement style
+• distinctive visual traits
 
 unless the story explicitly changes them.
 
 ----------------------------------------------------------------------
 
-Character Relationships
+3. Character Relationships
 
 ----------------------------------------------------------------------
 
 Determine how characters relate to one another.
 
-Examples:
+Examples include:
 
 • friends
 • family
@@ -69,35 +75,53 @@ Examples:
 • teammates
 • companions
 
-Maintain these relationships across connected scenes.
+Maintain these relationships throughout connected scenes unless the story explicitly changes them.
 
 ----------------------------------------------------------------------
 
-Character Behavior
+4. Character Behavior
 
 ----------------------------------------------------------------------
 
-Movement should reflect personality.
+Movement should reflect personality and physical characteristics.
 
 Examples:
 
-Confident characters move with purpose.
+• confident characters move with purpose
+• timid characters move cautiously
+• children move differently from adults
+• animals move according to their species
+• robots move according to their construction
 
-Timid characters move cautiously.
-
-Children move differently from adults.
-
-Animals move according to their species.
-
-Robots move according to their construction.
+Behavior should remain consistent unless the story justifies a change.
 
 ----------------------------------------------------------------------
 
-Inference Guidelines
+5. Character State Boundary
 
 ----------------------------------------------------------------------
 
-Infer only details required for visual generation.
+This module defines permanent character identity.
+
+Do not define temporary character state such as:
+
+• current emotions
+• injuries
+• dirt or damage
+• temporary clothing changes
+• carried objects
+• pose
+• facial expression
+
+Temporary character state belongs to the Story State Engine.
+
+----------------------------------------------------------------------
+
+6. Inference Guidelines
+
+----------------------------------------------------------------------
+
+Infer only details required for visual consistency.
 
 Do not invent:
 
@@ -111,10 +135,12 @@ unless explicitly requested.
 
 ----------------------------------------------------------------------
 
-Consistency Priority
+7. Consistency Priority
 
 ----------------------------------------------------------------------
 
 If later planning conflicts with an established character identity, preserve the existing identity unless the user explicitly requests a change.
 
-Character consistency is always preferred over unnecessary variation.
+Character consistency always takes priority over unnecessary variation.
+
+Pass the completed character definitions to the World Engine.
