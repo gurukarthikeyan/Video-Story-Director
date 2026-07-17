@@ -1,216 +1,716 @@
-# ============================================================================
-# Video Story Director - Rendering Engine
-# Module: 09
-# Layer: Rendering
-# Purpose: Convert the Scene Plan into a backend-independent Rendering Specification.
-# Inputs: Scene Plan, Frame0 Specification
-# Outputs: Rendering Specification
-# ============================================================================
+# Module 09 – Rendering Engine
 
-The Rendering Engine is the bridge between Story Intelligence and backend-specific prompt generation.
+> **Version:** v1.2.0
+>
+> **Status:** Active
+>
+> **Module:** 09
+>
+> **Responsibility:** Rendering Orchestration
 
-Its purpose is to transform the completed Scene Plan into a structured Rendering Specification that can be translated by any supported rendering backend.
+---
 
-The Rendering Engine does not generate prompts.
+# Purpose
 
-It defines **what must be rendered**, not **how a particular model should be instructed to render it**.
+The Rendering Engine is the rendering orchestration layer of Video Story Director.
 
-----------------------------------------------------------------------
+Its responsibility is to transform a backend-independent **Scene Model** into a complete **Rendering Specification** suitable for execution by the selected rendering pipeline.
 
-1. Rendering Philosophy
+The Rendering Engine does **not** perform narrative planning.
 
-----------------------------------------------------------------------
+It does **not** generate video frames.
 
-Separate story planning from backend implementation.
+Instead, it orchestrates every stage required to translate semantic scene understanding into a backend-ready execution package.
 
-Story Intelligence determines:
+The resulting Rendering Specification becomes the authoritative representation of **how** the planned scene should be rendered.
 
-• what happens
+---
 
-Rendering determines:
+# Scope
 
-• how the planned story should be represented for rendering
+The Rendering Engine answers one question:
 
-Backends determine:
+> **How should this Scene Model be rendered?**
 
-• how the Rendering Specification becomes a model-specific prompt.
+It receives semantic understanding from the Scene Planner and prepares everything required for the reference rendering pipeline.
 
-----------------------------------------------------------------------
+Narrative reasoning remains the responsibility of Module 07 – Scene Planner.
 
-2. Rendering Specification
+Video generation remains the responsibility of the rendering backend.
 
-----------------------------------------------------------------------
+---
 
-Produce a complete Rendering Specification for every scene.
+# Inputs
 
-The Rendering Specification should include:
+The Rendering Engine receives:
 
-• scene identity
-• scene duration
-• participating characters
-• environment
-• Frame 0 reference
-• camera intent
-• motion plan
-• emotional progression
-• environmental progression
-• continuity requirements
-• rendering constraints
+* Scene Model
+* Frame 0 Specification
+* Rendering constraints
+* Project configuration
+* Backend capabilities
+* Rendering preferences
 
-The Rendering Specification is backend-independent.
+These inputs represent semantic understanding together with rendering context.
 
-----------------------------------------------------------------------
+---
 
-3. Rendering Strategy
+# Outputs
 
-----------------------------------------------------------------------
+The Rendering Engine produces a complete **Rendering Specification**.
 
-Determine the appropriate rendering strategy.
+The Rendering Specification defines the rendering strategy while remaining independent of any individual backend implementation.
+
+Typical information includes:
+
+* Rendering strategy
+* Temporal planning
+* Prompt segmentation
+* Identity consistency requirements
+* Conditioning requirements
+* Backend translation requirements
+* Execution metadata
+
+The Rendering Specification becomes the contract between Video Story Director and the rendering pipeline.
+
+---
+
+# Responsibilities
+
+The Rendering Engine is responsible for:
+
+* Interpreting the Scene Model.
+* Selecting an appropriate rendering strategy.
+* Constructing the Rendering Specification.
+* Planning temporal execution.
+* Coordinating Prompt Relay.
+* Coordinating identity consistency.
+* Coordinating optional conditioning.
+* Preparing backend execution.
+* Preserving rendering consistency.
+
+The Rendering Engine is **not** responsible for:
+
+* Story reasoning.
+* Character creation.
+* Scene planning.
+* Narrative continuity.
+* Viewer interpretation.
+* Video frame generation.
+
+These responsibilities belong to other modules or the rendering backend.
+
+---
+
+# Rendering Philosophy
+
+Rendering exists to faithfully express the semantic understanding captured within the Scene Model.
+
+The Rendering Engine should preserve narrative intent while selecting rendering strategies that maximize visual consistency, temporal coherence, and execution reliability.
+
+Rendering adapts to the story.
+
+The story does not adapt to rendering.
+
+---
+
+# Core Rendering Principles
+
+## 1. Preserve Semantic Intent
+
+The Rendering Specification must preserve the meaning contained within the Scene Model.
+
+Rendering decisions should never alter the intended story.
+
+---
+
+## 2. Rendering Through Abstraction
+
+The Rendering Engine reasons using semantic information rather than backend-specific prompt structures.
+
+Backend translation occurs only after the Rendering Specification has been completed.
+
+---
+
+## 3. Progressive Assembly
+
+Rendering should be assembled through successive refinement rather than generated in a single step.
+
+Each rendering stage enriches the Rendering Specification while preserving previous decisions.
+
+---
+
+## 4. Backend Isolation
+
+Backend-specific behavior should remain isolated from planning logic.
+
+Changes to rendering technology should not require changes to narrative reasoning.
+
+---
+
+## 5. Consistency Before Optimization
+
+Character identity, temporal continuity, and scene coherence should take priority over backend-specific optimizations.
+
+Optimization should improve rendering quality without compromising semantic accuracy.
+
+---
+
+# Rendering Strategy
+
+Before preparing any rendering instructions, the Rendering Engine determines an appropriate rendering strategy based on the completed Scene Model.
+
+Rendering strategy considers:
+
+* Narrative complexity
+* Scene duration
+* Character count
+* Motion complexity
+* Camera intent
+* Environmental complexity
+* Rendering constraints
+
+The selected strategy guides every subsequent rendering decision.
+
+---
+
+# Progressive Rendering Assembly
+
+The Rendering Engine constructs the Rendering Specification through **Progressive Rendering Assembly (PRA)**.
+
+Rather than immediately producing backend prompts, the Rendering Engine incrementally assembles rendering knowledge through successive orchestration stages.
+
+Each stage enriches the Rendering Specification while preserving semantic consistency with the Scene Model.
+
+The completed Rendering Specification represents the authoritative rendering plan for the selected pipeline.
+
+---
+
+# Rendering Workflow (Overview)
+
+Every scene follows the same high-level rendering sequence.
+
+```text
+Receive Scene Model
+        │
+        ▼
+Determine Rendering Strategy
+        │
+        ▼
+Construct Rendering Specification
+        │
+        ▼
+Assemble Rendering Pipeline
+        │
+        ▼
+Prepare Backend Execution
+```
+
+Subsequent sections describe each stage in greater detail.
+
+---
+
+# Rendering Specification Construction
+
+The Rendering Specification is progressively assembled from the completed Scene Model.
+
+The Rendering Specification preserves semantic understanding while introducing rendering-oriented information required by the selected pipeline.
+
+The Rendering Specification represents rendering intent rather than backend implementation.
+
+Typical information includes:
+
+* Rendering strategy
+* Temporal structure
+* Camera behavior
+* Motion characteristics
+* Identity requirements
+* Conditioning requirements
+* Backend requirements
+* Execution metadata
+
+The Rendering Specification remains independent of any individual rendering backend until the final translation stage.
+
+---
+
+# Rendering Strategy
+
+Rendering strategy determines the overall approach used to render the planned scene.
+
+Strategy selection considers:
+
+* Scene complexity
+* Character count
+* Motion intensity
+* Camera intent
+* Environmental complexity
+* Expected duration
+* Continuity requirements
+
+The selected strategy should maximize rendering reliability while preserving narrative intent.
+
+---
+
+# Temporal Planning
+
+Video generation occurs over time.
+
+The Rendering Engine therefore plans temporal structure before backend execution.
+
+Temporal planning considers:
+
+* Scene duration
+* Action progression
+* Narrative pacing
+* Motion continuity
+* Transition timing
+* Temporal consistency
+
+Temporal planning prepares the scene for later prompt reinforcement and execution.
+
+---
+
+# Camera Translation
+
+The Scene Model defines Camera Intent.
+
+The Rendering Engine translates that intent into rendering behavior appropriate for the selected pipeline.
 
 Examples include:
 
-• image-to-video
-• text-to-video
-• single scene
-• multi-scene sequence
-• continuation of an existing story
+* Character following
+* Object emphasis
+* Emotional focus
+* Environmental observation
+* Information reveal
 
-Select the strategy using the user's request and available story context.
+Camera implementation remains backend specific.
 
-----------------------------------------------------------------------
+Camera intent remains backend independent.
 
-4. Scene Packaging
+---
 
-----------------------------------------------------------------------
+# Motion Planning
 
-Prepare scenes for rendering.
+Motion planning converts semantic actions into renderable motion characteristics.
 
-Determine:
+Planning considers:
 
-• rendering order
-• scene boundaries
-• shared continuity
-• independent scenes
+* Character movement
+* Object interaction
+* Environmental motion
+* Camera movement
+* Motion intensity
+* Temporal progression
 
-Do not modify story progression.
+Motion planning should preserve believable physical behavior while remaining achievable by the selected rendering pipeline.
 
-----------------------------------------------------------------------
+---
 
-5. Motion Planning
+# Prompt Relay Coordination
 
-----------------------------------------------------------------------
+Prompt Relay is treated as a rendering capability rather than a planning responsibility.
 
-Convert planned story events into observable visual actions.
+The Rendering Engine determines whether prompt reinforcement is required and incorporates the necessary requirements into the Rendering Specification.
 
-Motion should be:
+Prompt Relay is responsible for:
 
-• chronological
-• visually clear
-• physically plausible
-• appropriate for the scene duration
+* Reinforcing temporal intent
+* Maintaining prompt adherence
+* Preserving planned actions across temporal segments
+* Reducing semantic drift
 
-Do not introduce new story events.
+The Rendering Engine coordinates Prompt Relay.
 
-----------------------------------------------------------------------
+Prompt Relay performs prompt reinforcement.
 
-6. Camera Intent
+---
 
-----------------------------------------------------------------------
+# Identity Consistency Coordination
 
-Represent the purpose of the camera rather than backend-specific terminology.
+Character identity is preserved through dedicated identity consistency mechanisms.
 
-Examples include:
+The Rendering Engine identifies identity requirements contained within the Scene Model and communicates those requirements to the rendering pipeline.
 
-• establish
-• observe
-• follow
-• reveal
-• emphasize
-• conclude
+Identity coordination may include:
 
-Do not specify lens types or model-specific camera language.
+* Character appearance
+* Facial identity
+* Clothing
+* Hairstyle
+* Persistent visual attributes
 
-----------------------------------------------------------------------
+The Rendering Engine defines identity requirements.
 
-7. Continuity Requirements
+Identity consistency technologies perform identity preservation.
 
-----------------------------------------------------------------------
+---
 
-Specify which elements must remain consistent across scenes.
+# Conditioning Coordination
 
-Examples include:
-
-• character identity
-• character state
-• environment
-• lighting
-• active objects
-• visual style
-• camera language
-
-Continuity requirements become mandatory inputs for backend translation.
-
-----------------------------------------------------------------------
-
-8. Rendering Constraints
-
-----------------------------------------------------------------------
-
-Preserve all rendering constraints established by previous modules.
+Some rendering pipelines support additional conditioning techniques.
 
 Examples include:
 
-• scene duration
-• scene count
-• visual style
-• image availability
-• backend selection
-• user requirements
+* Pose guidance
+* Depth guidance
+* Motion guidance
+* Structural guidance
+* Composition guidance
 
-Do not introduce additional constraints.
+Conditioning is optional.
 
-----------------------------------------------------------------------
+When available, conditioning should strengthen rendering consistency without altering semantic intent.
 
-9. Backend Independence
+---
 
-----------------------------------------------------------------------
+# Rendering Capability Coordination
 
-Do not generate backend-specific wording.
+The Rendering Engine coordinates available rendering capabilities without becoming dependent upon any single implementation.
 
-Do not assume:
+Typical capabilities include:
 
-• prompt syntax
-• preferred adjectives
-• camera terminology
-• quality modifiers
-• model-specific optimization techniques
+* Temporal prompt reinforcement
+* Identity consistency
+* Additional conditioning
+* Backend optimization
 
-These responsibilities belong exclusively to backend modules.
+Capabilities should remain modular.
 
-----------------------------------------------------------------------
+Future rendering technologies should be integrable without requiring changes to Scene Planning.
 
-10. Backend Handoff
+---
 
-----------------------------------------------------------------------
+# Backend Translation
 
-Produce a complete Rendering Specification.
+Only after the Rendering Specification has been completed does backend translation occur.
 
-The Rendering Specification becomes the single source of truth for every rendering backend.
+Backend translation converts rendering intent into backend-compatible execution instructions.
 
-Each backend consumes the same Rendering Specification and translates it into its own prompt format without modifying story intent.
+Translation responsibilities include:
 
-----------------------------------------------------------------------
+* Prompt formatting
+* Parameter mapping
+* Capability integration
+* Backend configuration
+* Execution preparation
 
-11. Internal Rule
+Backend translation should preserve every semantic decision contained within the Rendering Specification.
 
-----------------------------------------------------------------------
+---
 
-Before completing the Rendering Specification, internally verify:
+# Reference Rendering Pipeline
 
-• the story has not changed
-• scene order is preserved
-• continuity is maintained
-• no new events were introduced
-• rendering remains backend-independent
+The current reference implementation targets:
 
-Pass the completed Rendering Specification to the selected backend.
+```text
+Scene Model
+        │
+        ▼
+Rendering Specification
+        │
+        ▼
+Prompt Relay
+        │
+        ▼
+MSR
+        │
+        ▼
+Optional IC-LoRA
+        │
+        ▼
+LTX 2.3
+```
+
+This pipeline serves as the empirical reference implementation for Video Story Director v1.2.
+
+Alternative rendering pipelines may adopt different internal implementations while consuming the same Rendering Specification.
+
+---
+
+# Pipeline Assembly
+
+The Rendering Engine assembles the complete rendering pipeline before execution.
+
+Pipeline assembly verifies:
+
+* Rendering strategy selected
+* Temporal planning completed
+* Camera intent translated
+* Motion planning completed
+* Identity requirements identified
+* Conditioning requirements identified
+* Backend translation completed
+
+Only after successful assembly is the rendering package considered ready for execution.
+
+---
+
+# Rendering Package
+
+The Rendering Package is the final artifact produced by the Rendering Engine.
+
+It represents the complete backend-ready execution package.
+
+Typical contents include:
+
+* Rendering Specification
+* Backend instructions
+* Capability configuration
+* Execution metadata
+
+The Rendering Package becomes the input consumed by the selected rendering backend.
+
+The backend is responsible solely for execution.
+
+Narrative and rendering reasoning remain the responsibility of Video Story Director.
+
+---
+
+# Internal Rendering Rules
+
+The following rules govern every rendering decision performed by the Rendering Engine.
+
+These rules preserve architectural consistency while allowing rendering technologies to evolve independently.
+
+---
+
+## Rule 1 — Preserve Semantic Intent
+
+The Rendering Engine shall preserve the semantic understanding contained within the Scene Model.
+
+Rendering optimizations must never alter the intended story.
+
+---
+
+## Rule 2 — Rendering Follows Planning
+
+The Rendering Engine consumes the completed Scene Model.
+
+It must not reinterpret narrative intent or introduce new story elements.
+
+Narrative reasoning ends with Module 07.
+
+Rendering reasoning begins with Module 09.
+
+---
+
+## Rule 3 — Assemble Before Translation
+
+The Rendering Specification should be completed before backend translation begins.
+
+Backend-specific decisions should never influence semantic planning.
+
+---
+
+## Rule 4 — Coordinate Capabilities
+
+The Rendering Engine coordinates rendering capabilities without becoming dependent upon individual implementations.
+
+Examples include:
+
+* Temporal prompt reinforcement
+* Identity consistency
+* Additional conditioning
+* Backend optimization
+
+Capability implementations may evolve independently.
+
+---
+
+## Rule 5 — Preserve Backend Independence
+
+The Rendering Specification should remain independent of any single rendering backend.
+
+Backend translation occurs only at the final execution stage.
+
+---
+
+## Rule 6 — Consistency Before Optimization
+
+Identity consistency, temporal coherence, and narrative clarity take precedence over backend-specific optimizations.
+
+---
+
+## Rule 7 — Respect Capability Boundaries
+
+Each rendering capability should perform only its intended responsibility.
+
+Examples:
+
+* Prompt reinforcement improves temporal adherence.
+* Identity systems preserve character appearance.
+* Conditioning systems provide additional guidance.
+* Rendering backends generate video.
+
+Responsibilities should not overlap unnecessarily.
+
+---
+
+## Rule 8 — Preserve Pipeline Modularity
+
+Individual rendering capabilities should remain replaceable without affecting planning architecture.
+
+The Rendering Engine should orchestrate capabilities rather than depend on specific implementations.
+
+---
+
+# Rendering Validation
+
+Before backend execution, the Rendering Engine validates the completed Rendering Specification.
+
+---
+
+## Semantic Validation
+
+Verify that:
+
+* Story intent has been preserved.
+* Scene Goals remain unchanged.
+* Viewer Outcome remains achievable.
+* Narrative constraints remain intact.
+
+---
+
+## Rendering Validation
+
+Verify that:
+
+* Rendering strategy has been selected.
+* Temporal planning is complete.
+* Motion planning is coherent.
+* Camera intent has been translated.
+* Rendering constraints are satisfied.
+
+---
+
+## Capability Validation
+
+Verify that required rendering capabilities have been identified.
+
+Examples include:
+
+* Prompt reinforcement
+* Identity consistency
+* Optional conditioning
+
+The Rendering Engine validates requirements rather than specific implementations.
+
+---
+
+## Backend Validation
+
+Verify that:
+
+* Backend requirements are complete.
+* Translation succeeded.
+* Execution metadata is valid.
+* Required capabilities are available.
+
+Only validated Rendering Packages should proceed to execution.
+
+---
+
+# Output Contract
+
+The Rendering Engine produces two architectural artifacts.
+
+## Primary Artifact
+
+> **Rendering Specification**
+
+The Rendering Specification represents the complete rendering plan derived from the Scene Model.
+
+It preserves semantic understanding while introducing rendering-oriented information.
+
+---
+
+## Execution Artifact
+
+> **Rendering Package**
+
+The Rendering Package represents the backend-ready execution package produced after backend translation.
+
+Typical contents include:
+
+* Rendering Specification
+* Backend instructions
+* Capability configuration
+* Execution metadata
+
+The Rendering Package is consumed exclusively by the selected rendering backend.
+
+---
+
+# Handoff to Rendering Backend
+
+Once the Rendering Package has been validated, execution responsibility transfers to the selected rendering backend.
+
+The rendering backend is responsible for:
+
+* Executing the Rendering Package
+* Generating video frames
+* Reporting execution status
+
+The rendering backend is **not** responsible for:
+
+* Story reasoning
+* Scene planning
+* Rendering strategy
+* Prompt planning
+* Identity planning
+
+Those responsibilities remain within Video Story Director.
+
+---
+
+# Relationship to Other Modules
+
+The Rendering Engine collaborates with:
+
+* Module 07 – Scene Planner
+* Module 08 – Frame 0 Engine
+* Module 10 – Validation Engine
+* Module 11 – Output Contract
+
+The Rendering Engine consumes semantic understanding while preparing backend execution.
+
+It does not replace the responsibilities of any collaborating module.
+
+---
+
+# Architectural Summary
+
+The Rendering Engine serves as the rendering orchestration layer of Video Story Director.
+
+It transforms a backend-independent Scene Model into a Rendering Specification and ultimately a backend-ready Rendering Package.
+
+The Rendering Engine determines **how** a scene should be rendered.
+
+The rendering backend determines **how** video frames are generated.
+
+Maintaining this separation allows rendering technologies, capability implementations, and backend integrations to evolve without affecting the planner's semantic reasoning.
+
+---
+
+# Future Evolution
+
+Future versions of the Rendering Engine may incorporate additional rendering capabilities, orchestration strategies, or backend integrations.
+
+Examples include:
+
+* Advanced temporal guidance
+* Native identity preservation
+* Improved conditioning strategies
+* Adaptive rendering optimization
+* Automated backend capability detection
+
+These enhancements should strengthen rendering quality while preserving the architectural principles defined in this module.
+
+---
+
+# Guiding Principle
+
+> **Understand through planning.
+> Orchestrate through abstraction.
+> Execute through specialization.**

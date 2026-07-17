@@ -1,0 +1,14 @@
+id: B001
+
+name: City Park
+
+status: Active
+
+version: 1.0
+
+description: Sunny urban park used as baseline environment.
+
+background: background.png
+
+notes:
+  - Baseline background

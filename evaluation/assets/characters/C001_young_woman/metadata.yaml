@@ -1,0 +1,16 @@
+id: C001
+
+name: Young Woman
+
+status: Active
+
+version: 1.0
+
+description: Reference female character used throughout Golden Scenarios.
+
+character_sheet: character_sheet.png
+
+first_frame: first_frame.png
+
+notes:
+  - Baseline character
